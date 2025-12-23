@@ -1,6 +1,5 @@
 package upt.paam.lab6.location
 
-
 import android.annotation.SuppressLint
 import android.content.Context
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -16,15 +15,22 @@ class LocationHandler(context: Context) {
         LocationServices.getFusedLocationProviderClient(context)
 
     fun registerLocationListener(locationCallback: LocationCallback) {
-        // TODO 2: Create a LocationRequest with Priority.PRIORITY_HIGH_ACCURACY,
-        //  min update distance set to 5m and update interval to 100ms.
 
-        // TODO 3: Register request and callback with the fused location service client.
+        val locationRequest = LocationRequest.Builder(
+            Priority.PRIORITY_HIGH_ACCURACY,
+            100L              // interval 100 ms
+        )
+            .setMinUpdateDistanceMeters(5f) // 5 metri
+            .build()
 
+        client.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            null
+        )
     }
 
     fun unregisterLocationListener(locationCallback: LocationCallback) {
         client.removeLocationUpdates(locationCallback)
     }
-
 }
